@@ -40,4 +40,9 @@ public class UIManager
     {
         _uiView.SpawnFloatingPoint(points, target);
     }
+
+    public void ShowIntroAnimation()
+    {
+        _uiView.ShowIntroAnimation();
+    }
 }

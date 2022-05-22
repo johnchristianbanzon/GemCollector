@@ -10,6 +10,8 @@ public class GameManager
     private PlayerManager _playerManager;
     [Inject]
     private SoundManager _soundManager;
+    [Inject]
+    private LoadingManager _loadingManager;
     private GameView _gameView;
     private int _timeDuration = 90;
     private int _currentPoints = 0;
@@ -30,11 +32,26 @@ public class GameManager
 
     public void StartGame()
     {
-        _soundManager.PlayGameBGM();
-        _uiManager.ShowScreen(EnumScreen.Gameplay);
-        _uiManager.StartTimer(_timeDuration, OnEndTimer);
-        _gameView.ShowGame();
+        
+        _loadingManager.ShowLoading(delegate {
+            _gameView.ShowIntroCamera();
+            _soundManager.PlayGameBGM();
+            _uiManager.ShowScreen(EnumScreen.Gameplay);
+            _gameView.ShowGame();
+            _uiManager.ShowIntroAnimation();
+            
+        });
+    }
+
+    public void ShowGameCamera()
+    {
         _gameView.ShowGameCamera();
+    }
+
+    public void StartGameTimer()
+    {
+        _uiManager.StartTimer(_timeDuration, OnEndTimer);
+        _gameView.StartGame();
     }
 
     public void ReducePoints()

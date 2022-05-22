@@ -1,8 +1,10 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class UIGameplayView : MonoBehaviour, IScreen
 {
@@ -10,16 +12,62 @@ public class UIGameplayView : MonoBehaviour, IScreen
     private Text _timerText;
     [SerializeField]
     private Text _pointsText;
+    [SerializeField]
+    private Text _readyText;
+    [SerializeField]
+    private Text _goText;
     private Action _onEndTimer;
     private int _totalTime;
     private int _currentTime;
     private List<FloatingPointsView> _floatingTextPool = new List<FloatingPointsView>();
+    [Inject]
+    private GameManager _gameManager;
 
     public void StartTimer(int totalTime, Action onEndTimer)
     {
         _onEndTimer = onEndTimer;
         _totalTime = totalTime;
         StartCoroutine("StartTimerCountdown");
+    }
+
+    public void ShowIntro()
+    {
+        StartCoroutine("ShowIntroAnimation");
+    }
+
+    private IEnumerator ShowIntroAnimation()
+    {
+        var normalPosition = _readyText.transform.position;
+        _readyText.gameObject.SetActive(true);
+        _readyText.transform.localScale = Vector3.zero;
+        _readyText.transform.position -= new Vector3(200, 0, 0);
+        _readyText.DOFade(0, 0.005f);
+        _readyText.DOFade(1, 0.1f);
+        _readyText.transform.DOMove(normalPosition, 0.2f).SetEase(Ease.Linear);
+        _readyText.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(1.4f);
+        normalPosition += new Vector3(200, 0, 0);
+        _readyText.DOFade(0, 0.1f);
+        _readyText.transform.DOMove(normalPosition, 0.2f).SetEase(Ease.Linear);
+        _readyText.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Linear);
+        
+        yield return new WaitForSeconds(1.4f);
+        _gameManager.ShowGameCamera();
+        yield return new WaitForSeconds(2f);
+        _gameManager.StartGameTimer();
+        normalPosition = _goText.transform.position;
+        _goText.gameObject.SetActive(true);
+        _goText.transform.localScale = Vector3.zero;
+        _goText.transform.position -= new Vector3(200, 0, 0);
+        _goText.DOFade(0, 0.005f);
+        _goText.DOFade(1, 0.1f);
+        _goText.transform.DOMove(normalPosition, 0.2f).SetEase(Ease.Linear);
+        _goText.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(1.4f);
+        normalPosition += new Vector3(200, 0, 0);
+        _goText.DOFade(0, 0.1f);
+        _goText.transform.DOMove(normalPosition, 0.2f).SetEase(Ease.Linear);
+        _goText.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Linear);
     }
 
     private IEnumerator StartTimerCountdown()
@@ -53,7 +101,6 @@ public class UIGameplayView : MonoBehaviour, IScreen
                 _floatingTextPool[i].Show(points);
                 return;
             }
-           
         }
         var newFloatingPoint = (Instantiate(Resources.Load("Prefabs/FloatingText"), transform) as GameObject).GetComponent<FloatingPointsView>();
         newFloatingPoint.SetTarget(target);
