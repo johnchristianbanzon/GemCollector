@@ -109,6 +109,7 @@
     <Compile Include="Assets\Game\Scripts\Behavior\AIThiefAlienBehavior.cs" />
     <Compile Include="Assets\Game\Scripts\Views\BlackLoadingView.cs" />
     <Compile Include="Assets\Game\Scripts\Managers\LoadingManager.cs" />
+    <Compile Include="Assets\Game\Scripts\Views\DialogBoxView.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Game\Plugins\SineVFX\PostProcessingV2\Shaders\StdLib.hlsl" />

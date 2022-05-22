@@ -13,6 +13,10 @@ public class PlayerManager
         _playerBehaviour.MovePlayer(direction);
     }
 
+    public void AllowMovement(bool allowMovement)
+    {
+        _playerBehaviour.AllowMovement(allowMovement);
+    }
 
     public void RotatePlayer(float rotationAngle)
     {
