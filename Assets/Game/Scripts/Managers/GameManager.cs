@@ -32,7 +32,8 @@ public class GameManager
 
     public void StartGame()
     {
-        
+        _playerManager.AllowMovement(false);
+
         _loadingManager.ShowLoading(delegate {
             _gameView.ShowIntroCamera();
             _soundManager.PlayGameBGM();
@@ -52,6 +53,7 @@ public class GameManager
     {
         _uiManager.StartTimer(_timeDuration, OnEndTimer);
         _gameView.StartGame();
+        _playerManager.AllowMovement(true);
     }
 
     public void ReducePoints()
@@ -77,6 +79,7 @@ public class GameManager
         if (scorePass)
         {
             _uiManager.ShowScreen(EnumScreen.Result);
+            _gameView.EndGame();
         }
         else
         {

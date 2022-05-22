@@ -6,4 +6,6 @@ public interface IPlayerBehaviour
     public void RotatePlayer(float rotationAngle);
     public Transform GetTransform();
     public void KillPlayer();
+
+    public void AllowMovement(bool allowMovement);
 }

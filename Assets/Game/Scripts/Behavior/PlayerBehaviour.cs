@@ -16,6 +16,7 @@ public class PlayerBehaviour : MonoBehaviour, IPlayerBehaviour
     private float _rotateSpeed;
     private bool _isAnimating = false;
     private bool _isDead;
+    private bool _allowMovement;
 
     private void Awake()
     {
@@ -44,6 +45,11 @@ public class PlayerBehaviour : MonoBehaviour, IPlayerBehaviour
         }
     }
 
+    public void AllowMovement(bool allowMovement)
+    {
+        _allowMovement = allowMovement;
+    }
+
     public void Retrieve(EnumGemType gemType)
     {
         _playerManager.AddPoints(gemType);
@@ -51,6 +57,10 @@ public class PlayerBehaviour : MonoBehaviour, IPlayerBehaviour
 
     public void MovePlayer(Vector3 direction)
     {
+        if (_allowMovement==false)
+        {
+            return;
+        }
         _playerRigidBody.AddForce(direction * _speed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         //_playerRigidBody.velocity = 9 * (_playerRigidBody.velocity.normalized);
         if (_playerRigidBody.velocity.magnitude > 6)
@@ -61,6 +71,10 @@ public class PlayerBehaviour : MonoBehaviour, IPlayerBehaviour
 
     public void RotatePlayer(float rotationAngle)
     {
+        if (_allowMovement==false)
+        {
+            return;
+        }
         transform.eulerAngles = new Vector3(0f, rotationAngle, 0f);
     }
 
