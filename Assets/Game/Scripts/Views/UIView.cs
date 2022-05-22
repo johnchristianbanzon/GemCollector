@@ -32,6 +32,11 @@ public class UIView : MonoBehaviour
         _uiGameplayView.ShowPoints(currentPoints);
     }
 
+    public void ShowIntroAnimation()
+    {
+        _uiGameplayView.ShowIntro();
+    }
+
     public void SpawnFloatingPoint(int points,Transform target)
     {
         _uiGameplayView.ShowFloatingPoint(points, target);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -30,19 +31,43 @@ public class GameView : MonoBehaviour
     {
         _menuWorldHolder.SetActive(false);
         _gameWorldHolder.SetActive(true);
+        _aiBehavior.PauseChase();
+    }
+
+    public void StartGame()
+    {
+        _aiBehavior.ResumeChase();
     }
 
     public void ShowGameCamera()
     {
-        _cameras[0].gameObject.SetActive(false);
+        for (int i = 0; i < _cameras.Length; i++)
+        {
+            _cameras[i].gameObject.SetActive(false);
+        }
         _cameras[1].gameObject.SetActive(true);
+       
     }
 
     public void ShowMainCamera()
     {
-        _cameras[1].gameObject.SetActive(false);
+        for (int i = 0; i < _cameras.Length; i++)
+        {
+            _cameras[i].gameObject.SetActive(false);
+        }
         _cameras[0].gameObject.SetActive(true);
     }
+
+    public void ShowIntroCamera()
+    {
+        for (int i = 0; i < _cameras.Length; i++)
+        {
+            _cameras[i].gameObject.SetActive(false);
+        }
+        _cameras[2].gameObject.SetActive(true);
+      
+    }
+    
 
     public void EndGame()
     {

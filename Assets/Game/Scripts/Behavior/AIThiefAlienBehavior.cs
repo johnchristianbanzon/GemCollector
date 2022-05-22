@@ -9,6 +9,10 @@ public class AIThiefAlienBehavior : MonoBehaviour
     private Transform _targetPlayer;
     [SerializeField]
     private float _speed = 1.4f;
+    [SerializeField]
+    private BoxCollider _boxColldier;
+    [SerializeField]
+    private Rigidbody _rigidBody;
     private bool _pauseChase;
 
     private void Awake()
@@ -39,7 +43,7 @@ public class AIThiefAlienBehavior : MonoBehaviour
         ResumeChase();
     }
 
-    private void ResumeChase()
+    public void ResumeChase()
     {
         _pauseChase = false;
     }
@@ -52,6 +56,10 @@ public class AIThiefAlienBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (_pauseChase)
+        {
+            return;
+        }
         if(collision.gameObject.tag == "Player")
         {
             OnPlayerHit();

@@ -11,5 +11,7 @@ public class ModelInstaller : Installer<ModelInstaller>
         Container.Bind<InputManager>().To<InputManager>().FromNew().AsSingle();
         Container.Bind<PlayerManager>().To<PlayerManager>().FromNew().AsSingle();
         Container.Bind<SoundManager>().To<SoundManager>().FromNew().AsSingle();
+        Container.Bind<LoadingManager>().To<LoadingManager>().FromNew().AsSingle();
+        
     }
 }
